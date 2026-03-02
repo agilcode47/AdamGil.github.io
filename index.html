@@ -5,76 +5,583 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Adam W. Gil | Electrical Engineering</title>
   <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-slate-900 text-slate-100 font-sans">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+    html { scroll-behavior: smooth; }
 
-  <nav class="p-6 flex justify-between items-center max-w-6xl mx-auto">
-    <h1 class="text-xl font-bold tracking-widest text-blue-400">Adam Gil</h1>
-    <div class="space-x-6">
-      <a href="#projects" class="hover:text-blue-400">Projects</a>
-      <a href="#experience" class="hover:text-blue-400">Experience</a>
-      <a href="#contact" class="bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-500">Contact</a>
+    /* Sticky nav with blur */
+    .nav-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    /* Skill / tag chips */
+    .chip {
+      display: inline-block;
+      background: #eff6ff;
+      color: #2563eb;
+      border: 1px solid #bfdbfe;
+      padding: 0.2rem 0.65rem;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .chip-gray {
+      background: #f3f4f6;
+      color: #374151;
+      border-color: #e5e7eb;
+    }
+
+    /* Project cards */
+    .project-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(37, 99, 235, 0.09);
+    }
+
+    /* Timeline dots */
+    .timeline-dot-active {
+      background: #2563eb;
+      box-shadow: 0 0 0 3px #dbeafe;
+    }
+    .timeline-dot-past {
+      background: #d1d5db;
+      box-shadow: 0 0 0 3px #f3f4f6;
+    }
+
+    /* Fade-in on scroll */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Section divider */
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 3px;
+      background: #2563eb;
+      border-radius: 2px;
+      margin-top: 8px;
+    }
+
+    /* Hero gradient underline */
+    .name-accent {
+      background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Mobile nav toggle */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .nav-links.open { display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem; border-top: 1px solid #e5e7eb; background: white; }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900 antialiased">
+
+  <!-- ── NAVIGATION ── -->
+  <nav class="nav-sticky">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="#" class="text-lg font-bold tracking-tight">
+        <span class="name-accent">Adam Gil</span>
+      </a>
+      <div class="hidden sm:flex items-center gap-7 text-sm font-medium text-gray-600">
+        <a href="#skills"       class="hover:text-blue-600 transition-colors">Skills</a>
+        <a href="#projects"    class="hover:text-blue-600 transition-colors">Projects</a>
+        <a href="#eportfolio"  class="hover:text-blue-600 transition-colors">E-Portfolio</a>
+        <a href="#experience"  class="hover:text-blue-600 transition-colors">Experience</a>
+        <a href="#education"   class="hover:text-blue-600 transition-colors">Education</a>
+        <a href="#contact" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold">
+          Contact
+        </a>
+      </div>
+      <!-- Mobile menu button -->
+      <button onclick="document.getElementById('mobileMenu').classList.toggle('hidden')"
+        class="sm:hidden text-gray-500 hover:text-blue-600 focus:outline-none" aria-label="Toggle menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="hidden sm:hidden px-6 pb-4 flex flex-col gap-3 text-sm font-medium text-gray-600 border-t border-gray-100 pt-4">
+      <a href="#skills"      class="hover:text-blue-600">Skills</a>
+      <a href="#projects"    class="hover:text-blue-600">Projects</a>
+      <a href="#eportfolio"  class="hover:text-blue-600">E-Portfolio</a>
+      <a href="#experience"  class="hover:text-blue-600">Experience</a>
+      <a href="#education"   class="hover:text-blue-600">Education</a>
+      <a href="#contact"    class="text-blue-600 font-semibold">Contact</a>
     </div>
   </nav>
 
-  <header class="py-12 text-center max-w-4xl mx-auto px-4">
-    <img src="profile.jpg" alt="Profile photo of Adam Gil" class="mx-auto w-32 h-32 rounded-full border-4 border-blue-500 mb-6"/>
-    <h2 class="text-4xl font-extrabold mb-2">Adam W. Gil</h2>
-    <p class="text-slate-400 mb-4">Electrical Engineering Student at Loyola Marymount University | U.S. Citizen</p>
-    <div class="flex justify-center gap-3 text-sm text-slate-300">
-      <span class="bg-slate-800 px-3 py-1 rounded-full border border-slate-700">GPA: 3.19</span>
-      <a href="https://www.linkedin.com/in/adam-gil-568721302" class="underline hover:text-blue-400">LinkedIn</a>
-      <a href="Resume.pdf" class="underline hover:text-blue-400">Resume</a>
+
+  <!-- ── HERO ── -->
+  <header class="pt-20 pb-16 max-w-5xl mx-auto px-6">
+    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-8">
+      <!-- Profile photo -->
+      <div class="flex-shrink-0">
+        <img src="profile.jpg" alt="Adam Gil"
+          class="w-28 h-28 rounded-full object-cover border-4 border-white shadow-lg ring-2 ring-blue-100"/>
+      </div>
+      <!-- Text -->
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-widest text-blue-500 mb-2">Internship Candidate · Summer 2026</p>
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight mb-3 leading-tight">
+          Adam W. Gil
+        </h1>
+        <p class="text-base text-gray-600 mb-5 max-w-xl leading-relaxed">
+          Electrical Engineering student at Loyola Marymount University building at the intersection of hardware and software —
+          from autonomous robotics to analog circuit design and embedded systems.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip chip-gray">GPA 3.19</span>
+          <span class="chip chip-gray">Expected May 2027</span>
+          <span class="chip chip-gray">U.S. Citizen</span>
+          <span class="chip chip-gray">Fluent: English · Polish</span>
+          <a href="https://www.linkedin.com/in/adam-gil-568721302" target="_blank"
+            class="chip hover:bg-blue-100 transition-colors">LinkedIn ↗</a>
+          <a href="Resume.pdf" target="_blank"
+            class="chip hover:bg-blue-100 transition-colors">Resume ↗</a>
+        </div>
+      </div>
     </div>
   </header>
 
-  <section id="projects" class="py-16 max-w-6xl mx-auto px-4">
-    <h3 class="text-3xl font-bold mb-10 border-b border-slate-800 pb-2">Projects</h3>
-    <div class="grid md:grid-cols-2 gap-8">
-      <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 hover:border-blue-500 transition">
-        <h4 class="text-xl font-bold text-blue-400 mb-2">Pi Car Pro Autonomous System</h4>
-        <img src="picar1.jpeg" alt="Pi Car Pro in motion" class="rounded mb-4"/>
-        <p class="text-slate-400 text-sm mb-4">Built a Raspberry Pi robotic vehicle with real-time Python control and UV line tracking. Used onboard camera and Adeept controller UI for vision-based remote operation.</p>
-        <div class="flex gap-2 text-xs">
-          <span class="bg-slate-700 px-2 py-1 rounded">Python</span>
-          <span class="bg-slate-700 px-2 py-1 rounded">Linux</span>
-          <span class="bg-slate-700 px-2 py-1 rounded">GPIO</span>
+
+  <!-- ── SKILLS ── -->
+  <section id="skills" class="py-14 bg-white border-t border-b border-gray-100">
+    <div class="max-w-5xl mx-auto px-6 fade-up">
+      <h2 class="text-2xl font-bold text-gray-900 mb-8 section-title">Technical Skills</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Programming</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip">Python</span>
+            <span class="chip">C</span>
+            <span class="chip">Java</span>
+            <span class="chip">MATLAB</span>
+            <span class="chip">ARMSim</span>
+          </div>
         </div>
-      </div>
-      <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 hover:border-blue-500 transition">
-        <h4 class="text-xl font-bold text-blue-400 mb-2">Transistor Amplifier Design</h4>
-        <p class="text-slate-400 text-sm mb-4">Designed and tested a voltage divider biased common emitter amplifier, tuning gain and stability using Multisim and validating performance on NI ELVIS hardware.</p>
-        <div class="flex gap-2 text-xs">
-          <span class="bg-slate-700 px-2 py-1 rounded">Multisim</span>
-          <span class="bg-slate-700 px-2 py-1 rounded">Oscilloscope</span>
+
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Design & Simulation</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip">Multisim</span>
+            <span class="chip">LabVIEW</span>
+            <span class="chip">SolidWorks</span>
+            <span class="chip">Fusion 360</span>
+          </div>
         </div>
+
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Lab & Hardware</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip">Oscilloscope</span>
+            <span class="chip">NI-ELVIS</span>
+            <span class="chip">Breadboarding</span>
+            <span class="chip">GPIO</span>
+            <span class="chip">PWM</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Tools & Platforms</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip">VS Code</span>
+            <span class="chip">GitHub</span>
+            <span class="chip">Google Colab</span>
+            <span class="chip">Linux</span>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <section id="experience" class="py-16 max-w-6xl mx-auto px-4">
-    <h3 class="text-3xl font-bold mb-6 border-b border-slate-800 pb-2">Experience</h3>
-    <ul class="space-y-6 text-slate-400 text-sm">
-      <li>
-        <strong>Electrical Engineering Lab TA</strong> · LMU<br>
-        Led lab sections for first-year students, assisting with waveform analysis, circuit builds, and debugging.
-      </li>
-      <li>
-        <strong>Calculus Grader</strong> · LMU<br>
-        Reviewed problem sets for accuracy and helped maintain feedback records for faculty.
-      </li>
-      <li>
-        <strong>Scheduling Assistant</strong> · LMU Conference & Events<br>
-        Supported logistics for over 1000 campus events and managed operations through Mozevo.
-      </li>
-    </ul>
+
+  <!-- ── PROJECTS ── -->
+  <section id="projects" class="py-16 max-w-5xl mx-auto px-6">
+    <h2 class="text-2xl font-bold text-gray-900 mb-8 section-title fade-up">Projects</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <!-- Pi Car Pro — spans full row to give the video room -->
+      <div class="project-card fade-up bg-white rounded-xl border border-gray-200 p-6 shadow-sm sm:col-span-2 lg:col-span-3">
+        <div class="flex flex-col lg:flex-row gap-6">
+          <!-- Video -->
+          <div class="lg:w-1/2 flex-shrink-0">
+            <video controls preload="metadata"
+              class="w-full rounded-lg border border-gray-100 bg-gray-900"
+              style="max-height: 260px; object-fit: contain;">
+              <!-- MOV files work in Safari and Chrome/Mac natively.
+                   For widest compatibility, consider also exporting an .mp4 version. -->
+              <source src="picar1.mov" type="video/mp4">
+              <source src="picar1.mov" type="video/quicktime">
+              <p class="text-xs text-gray-400 p-4">Video preview not supported in this browser. <a href="picar1.mov" class="underline">Download to view.</a></p>
+            </video>
+          </div>
+          <!-- Text -->
+          <div class="flex flex-col justify-center">
+            <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center mb-3 text-xl">🤖</div>
+            <h3 class="font-semibold text-gray-900 mb-2 text-lg">Pi Car Pro Autonomous System</h3>
+            <p class="text-sm text-gray-500 leading-relaxed mb-4">
+              Built a Raspberry Pi-based robotic vehicle integrating servo motors, GPIO, and onboard sensors.
+              Developed Linux and Python-based real-time control with PWM motor drivers and UV-based line tracking.
+              Features a remote operation interface via the Adeept controller UI and onboard camera vision.
+            </p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="chip">Python</span>
+              <span class="chip">Linux</span>
+              <span class="chip">GPIO</span>
+              <span class="chip">Raspberry Pi</span>
+              <span class="chip">PWM</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Operational Amplifier Design — spans 2 cols to show circuit image -->
+      <div class="project-card fade-up bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm sm:col-span-2">
+        <!-- Circuit schematic image -->
+        <img src="opamp_circuit.jpg" alt="Two-stage op-amp Multisim schematic"
+          class="w-full object-cover border-b border-gray-100" style="max-height: 220px; object-fit: contain; background:#f8fafc; padding: 0.5rem;"/>
+        <div class="p-6">
+          <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center mb-3 text-xl">⚡</div>
+          <h3 class="font-semibold text-gray-900 mb-2">Two-Stage Operational Amplifier Design</h3>
+          <p class="text-sm text-gray-500 leading-relaxed mb-4">
+            Designed and simulated a discrete two-stage op-amp using a CA3046 NPN transistor array and MPSA-13 Darlington pair on a ±10V supply.
+            Achieved differential gain A<sub>d</sub> = 400–500, input impedance R<sub>id</sub> ≥ 20kΩ, and output impedance R<sub>o</sub> ≤ 200Ω.
+            Verified performance using Multisim Bode plots, CMRR measurements, and hardware testing on NI-ELVIS.
+          </p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="chip">Multisim</span>
+            <span class="chip">BJT Design</span>
+            <span class="chip">NI-ELVIS</span>
+            <span class="chip">Bode Analysis</span>
+            <span class="chip">Analog Design</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RLC System -->
+      <div class="project-card fade-up bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center mb-4 text-xl">📡</div>
+        <h3 class="font-semibold text-gray-900 mb-2">Second-Order RLC System</h3>
+        <p class="text-sm text-gray-500 leading-relaxed mb-4">
+          Modeled and tested an RLC circuit, analyzing transient behavior, resonance, and bandwidth through time and frequency domain measurements.
+        </p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="chip">MATLAB</span>
+          <span class="chip">Oscilloscope</span>
+          <span class="chip">Circuit Analysis</span>
+        </div>
+      </div>
+
+      <!-- Sequential Logic -->
+      <div class="project-card fade-up bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center mb-4 text-xl">🔁</div>
+        <h3 class="font-semibold text-gray-900 mb-2">Sequential Logic & State Machines</h3>
+        <p class="text-sm text-gray-500 leading-relaxed mb-4">
+          Designed and implemented digital state machine systems, verifying correct operation through simulation and hardware-level testing.
+        </p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="chip">Digital Systems</span>
+          <span class="chip">Logic Design</span>
+          <span class="chip">Hardware Testing</span>
+        </div>
+      </div>
+
+      <!-- Op-Amp Voltage Regulation -->
+      <div class="project-card fade-up bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center mb-4 text-xl">🔋</div>
+        <h3 class="font-semibold text-gray-900 mb-2">Op-Amp Voltage Regulation</h3>
+        <p class="text-sm text-gray-500 leading-relaxed mb-4">
+          Developed an op-amp-based voltage regulation circuit providing stable, low-noise power for sensitive electronic subsystems.
+        </p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="chip">Op-Amp</span>
+          <span class="chip">Analog Design</span>
+          <span class="chip">Multisim</span>
+        </div>
+      </div>
+
+      <!-- Diode I-V Curve Tracer -->
+      <div class="project-card fade-up bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center mb-4 text-xl">📊</div>
+        <h3 class="font-semibold text-gray-900 mb-2">Diode I-V Curve Tracer</h3>
+        <p class="text-sm text-gray-500 leading-relaxed mb-4">
+          Programmed a LabVIEW-based diode I-V curve tracer to automate measurement and visualization of current-voltage characteristics.
+        </p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="chip">LabVIEW</span>
+          <span class="chip">Instrumentation</span>
+          <span class="chip">NI-ELVIS</span>
+        </div>
+      </div>
+
+    </div>
   </section>
 
-  <section id="contact" class="py-12 text-center">
-    <h3 class="text-2xl font-bold mb-2">Let's Connect</h3>
-    <p class="text-slate-400 mb-4">adam.gil.sd@gmail.com · (773) 822-2849</p>
-    <a href="mailto:adam.gil.sd@gmail.com" class="bg-blue-600 px-6 py-2 rounded hover:bg-blue-500">Email Me</a>
+
+  <!-- ── E-PORTFOLIO ── -->
+  <section id="eportfolio" class="py-16 bg-white border-t border-gray-100">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="fade-up flex flex-col md:flex-row md:items-start gap-10">
+
+        <!-- Left: description + download -->
+        <div class="md:w-2/5 flex-shrink-0">
+          <h2 class="text-2xl font-bold text-gray-900 mb-2 section-title">E-Portfolio</h2>
+          <p class="text-sm text-gray-500 leading-relaxed mt-4 mb-6">
+            A complete collection of lab work from <strong class="text-gray-700">Junior Lab I (EECE-3100)</strong> at LMU —
+            including pre-lab reports, post-lab write-ups, data sheets, and simulation files spanning 11 experiments
+            in analog circuits, digital systems, instrumentation, and amplifier design.
+          </p>
+          <a href="E-Portfolio.zip" download
+            class="inline-flex items-center gap-2 bg-blue-600 text-white font-semibold px-5 py-3 rounded-lg hover:bg-blue-700 transition-colors text-sm shadow-sm">
+            <!-- Download icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4"/>
+            </svg>
+            Download E-Portfolio (.zip)
+          </a>
+          <p class="text-xs text-gray-400 mt-2">Contains PDFs, data sheets &amp; simulation files</p>
+        </div>
+
+        <!-- Right: experiment index grid -->
+        <div class="md:w-3/5">
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">Experiments Included</p>
+          <div class="grid sm:grid-cols-2 gap-2">
+            <div class="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">
+              <span class="text-blue-500 font-bold text-xs w-5">00</span>
+              <span class="text-xs text-gray-600">DC Circuit Analysis</span>
+            </div>
+            <div class="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">
+              <span class="text-blue-500 font-bold text-xs w-5">01</span>
+              <span class="text-xs text-gray-600">Two-Port Circuits</span>
+            </div>
+            <div class="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">
+              <span class="text-blue-500 font-bold text-xs w-5">02</span>
+              <span class="text-xs text-gray-600">Op-Amp Applications</span>
+            </div>
+            <div class="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">
+              <span class="text-blue-500 font-bold text-xs w-5">03</span>
+              <span class="text-xs text-gray-600">Digital Decoder Design</span>
+            </div>
+            <div class="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">
+              <span class="text-blue-500 font-bold text-xs w-5">04</span>
+              <span class="text-xs text-gray-600">Intro to LabVIEW — Ohm's Law</span>
+            </div>
+            <div class="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">
+              <span class="text-blue-500 font-bold text-xs w-5">05</span>
+              <span class="text-xs text-gray-600">Power Supply Design</span>
+            </div>
+            <div class="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">
+              <span class="text-blue-500 font-bold text-xs w-5">06</span>
+              <span class="text-xs text-gray-600">LabVIEW Diode Tester</span>
+            </div>
+            <div class="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">
+              <span class="text-blue-500 font-bold text-xs w-5">07</span>
+              <span class="text-xs text-gray-600">Op-Amp Regulator Design</span>
+            </div>
+            <div class="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">
+              <span class="text-blue-500 font-bold text-xs w-5">08</span>
+              <span class="text-xs text-gray-600">Sequential Logic Design</span>
+            </div>
+            <div class="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">
+              <span class="text-blue-500 font-bold text-xs w-5">09</span>
+              <span class="text-xs text-gray-600">Second-Order RLC Circuit Design</span>
+            </div>
+            <div class="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">
+              <span class="text-blue-500 font-bold text-xs w-5">10</span>
+              <span class="text-xs text-gray-600">LabVIEW Transistor Tester</span>
+            </div>
+            <div class="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">
+              <span class="text-blue-500 font-bold text-xs w-5">11</span>
+              <span class="text-xs text-gray-600">Amplifier Design</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </section>
+
+
+  <!-- ── EXPERIENCE ── -->
+  <section id="experience" class="py-16 bg-white border-t border-gray-100">
+    <div class="max-w-5xl mx-auto px-6">
+      <h2 class="text-2xl font-bold text-gray-900 mb-10 section-title fade-up">Experience</h2>
+
+      <!-- Timeline -->
+      <div class="relative border-l-2 border-blue-100 pl-8 space-y-10">
+
+        <div class="relative fade-up">
+          <div class="absolute -left-[2.55rem] top-1 w-3.5 h-3.5 rounded-full border-2 border-white timeline-dot-active"></div>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-0.5">
+            <h3 class="font-semibold text-gray-900">Introduction to Engineering Lab TA</h3>
+            <span class="text-xs text-gray-400 font-medium mt-1 sm:mt-0">Aug 2025 – Present</span>
+          </div>
+          <p class="text-sm text-blue-600 font-medium mb-2">Loyola Marymount University · Electrical &amp; Computer Engineering</p>
+          <ul class="text-sm text-gray-500 space-y-1 leading-relaxed list-disc list-inside">
+            <li>Led four lab sections of 34 students through circuit debugging, waveform analysis, and oscilloscope-based measurements</li>
+            <li>Evaluated lab reports and provided technical feedback to reinforce core electrical engineering concepts</li>
+            <li>Set up and maintained electronic instrumentation and test equipment</li>
+          </ul>
+        </div>
+
+        <div class="relative fade-up">
+          <div class="absolute -left-[2.55rem] top-1 w-3.5 h-3.5 rounded-full border-2 border-white timeline-dot-active"></div>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-0.5">
+            <h3 class="font-semibold text-gray-900">Calculus Grader</h3>
+            <span class="text-xs text-gray-400 font-medium mt-1 sm:mt-0">Aug 2025 – Present</span>
+          </div>
+          <p class="text-sm text-blue-600 font-medium mb-2">Loyola Marymount University · Mathematics Department</p>
+          <ul class="text-sm text-gray-500 space-y-1 leading-relaxed list-disc list-inside">
+            <li>Evaluated coursework for two Calculus sections, ensuring accuracy and consistency in assessment</li>
+            <li>Maintained academic records and supported faculty with timely feedback to students</li>
+          </ul>
+        </div>
+
+        <div class="relative fade-up">
+          <div class="absolute -left-[2.55rem] top-1 w-3.5 h-3.5 rounded-full border-2 border-white timeline-dot-past"></div>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-0.5">
+            <h3 class="font-semibold text-gray-900">Scheduling Office Assistant</h3>
+            <span class="text-xs text-gray-400 font-medium mt-1 sm:mt-0">Aug 2023 – Aug 2025</span>
+          </div>
+          <p class="text-sm text-blue-600 font-medium mb-2">LMU Conference and Events</p>
+          <ul class="text-sm text-gray-500 space-y-1 leading-relaxed list-disc list-inside">
+            <li>Coordinated scheduling and logistics for 1,000+ campus events using Mozevo and internal systems</li>
+            <li>Communicated daily with clients to support room assignments, event setups, and operational requirements</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── EDUCATION + ACTIVITIES ── -->
+  <section id="education" class="py-16 max-w-5xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12">
+
+      <!-- Education -->
+      <div class="fade-up">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6 section-title">Education</h2>
+        <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+          <div class="flex items-start justify-between mb-1">
+            <h3 class="font-semibold text-gray-900">Loyola Marymount University</h3>
+            <span class="text-xs text-gray-400 font-medium">2023 – 2027</span>
+          </div>
+          <p class="text-sm text-blue-600 font-medium mb-4">B.S. Electrical Engineering · GPA 3.19</p>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Coursework</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip chip-gray">Microprocessors</span>
+            <span class="chip chip-gray">Electronics</span>
+            <span class="chip chip-gray">Signals &amp; Linear Systems</span>
+            <span class="chip chip-gray">Digital Systems</span>
+            <span class="chip chip-gray">Electromagnetics</span>
+            <span class="chip chip-gray">Computer Programming</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activities -->
+      <div class="fade-up">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6 section-title">Activities</h2>
+        <div class="space-y-4">
+          <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm flex gap-4 items-start">
+            <span class="text-xl mt-0.5">🔭</span>
+            <div>
+              <h3 class="font-semibold text-gray-900 text-sm mb-1">PEEC Living Learning Community</h3>
+              <p class="text-xs text-gray-500 leading-relaxed">STEM-focused residential cohort with weekly engineering seminars and visits to the Mount Wilson Observatory.</p>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm flex gap-4 items-start">
+            <span class="text-xl mt-0.5">💡</span>
+            <div>
+              <h3 class="font-semibold text-gray-900 text-sm mb-1">LMU Entrepreneurship Certificate</h3>
+              <p class="text-xs text-gray-500 leading-relaxed">Designed an AI-driven food delivery business model using dietary data to optimize grocery selection and meal planning.</p>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm flex gap-4 items-start">
+            <span class="text-xl mt-0.5">🏒</span>
+            <div>
+              <h3 class="font-semibold text-gray-900 text-sm mb-1">LMU Club Ice Hockey</h3>
+              <p class="text-xs text-gray-500 leading-relaxed">Maintained a full engineering course load while training, traveling, and competing in collegiate club athletics.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ── CONTACT ── -->
+  <section id="contact" class="py-20 bg-blue-600">
+    <div class="max-w-2xl mx-auto px-6 text-center fade-up">
+      <h2 class="text-3xl font-extrabold text-white mb-3 tracking-tight">Let's Connect</h2>
+      <p class="text-blue-100 mb-10 text-sm leading-relaxed">
+        Open to Summer 2026 internship opportunities in electrical engineering,<br class="hidden sm:block"> embedded systems, or hardware design.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-3">
+        <a href="mailto:adam.gil.sd@gmail.com"
+          class="bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg hover:bg-blue-50 transition-colors text-sm shadow-sm">
+          adam.gil.sd@gmail.com
+        </a>
+        <a href="https://www.linkedin.com/in/adam-gil-568721302" target="_blank"
+          class="border border-white/50 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors text-sm">
+          LinkedIn ↗
+        </a>
+        <a href="Resume.pdf" target="_blank"
+          class="border border-white/50 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors text-sm">
+          Download Resume ↗
+        </a>
+      </div>
+      <p class="text-blue-200 text-xs mt-10">San Diego, CA &nbsp;·&nbsp; (773) 822-2849</p>
+    </div>
+  </section>
+
+
+  <!-- ── FOOTER ── -->
+  <footer class="py-5 text-center text-xs text-gray-400 bg-gray-50 border-t border-gray-100">
+    © 2026 Adam W. Gil &nbsp;·&nbsp; Built with HTML &amp; Tailwind CSS
+  </footer>
+
+
+  <!-- Scroll fade-in observer -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
 
 </body>
 </html>
